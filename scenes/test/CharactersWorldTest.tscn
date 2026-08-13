@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bpy61iddtbrdu"]
+[gd_scene format=3 uid="uid://bpy61iddtbrdu"]
 
 [ext_resource type="PackedScene" uid="uid://cr2ersq7g6q6f" path="res://prefabs/actors/player/ThirdPersonPlayer.tscn" id="1_lnyc1"]
 [ext_resource type="PackedScene" uid="uid://d2u8vbkvktl7g" path="res://prefabs/vehicles/VehicleTemplate.tscn" id="2_np362"]
@@ -28,87 +28,87 @@ sky = SubResource("Sky_xashb")
 [sub_resource type="Compositor" id="Compositor_26g4g"]
 compositor_effects = Array[CompositorEffect]([null])
 
-[node name="CharactersWorldTest" type="Node3D"]
+[node name="CharactersWorldTest" type="Node3D" unique_id=450184998]
 
-[node name="actors" type="Node" parent="."]
+[node name="actors" type="Node" parent="." unique_id=96492134]
 
-[node name="ThirdPersonPlayer" parent="actors" instance=ExtResource("1_lnyc1")]
+[node name="ThirdPersonPlayer" parent="actors" unique_id=672149255 instance=ExtResource("1_lnyc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26.7795)
 
-[node name="Vehicle" type="Node" parent="."]
+[node name="Vehicle" type="Node" parent="." unique_id=2111532589]
 
-[node name="VehicleTemplate" parent="Vehicle" instance=ExtResource("2_np362")]
+[node name="VehicleTemplate" parent="Vehicle" unique_id=193329223 instance=ExtResource("2_np362")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.3968)
 
-[node name="map" type="Node" parent="."]
+[node name="map" type="Node" parent="." unique_id=711998386]
 
-[node name="ground" type="MeshInstance3D" parent="map"]
+[node name="ground" type="MeshInstance3D" parent="map" unique_id=847402383]
 mesh = SubResource("PlaneMesh_lq02y")
 surface_material_override/0 = SubResource("StandardMaterial3D_dl5pt")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="map/ground"]
+[node name="StaticBody3D" type="StaticBody3D" parent="map/ground" unique_id=1805860053]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="map/ground/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/ground/StaticBody3D" unique_id=1800139623]
 shape = SubResource("ConcavePolygonShape3D_bdrje")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D" type="CSGBox3D" parent="map" unique_id=1008725280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.744, -0.202576, -26.2349)
 use_collision = true
 size = Vector3(1, 0.594849, 5.20898)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D8" type="CSGBox3D" parent="map" unique_id=2064494234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.6763, -0.202576, -26.2349)
 use_collision = true
 size = Vector3(1, 0.594849, 5.20898)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D9" type="CSGBox3D" parent="map" unique_id=366460781]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7148, -0.202576, -26.2349)
 use_collision = true
 size = Vector3(1, 0.594849, 5.20898)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="map" unique_id=1540170906]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1024, -0.202576, -26.2349)
 use_collision = true
 size = Vector3(1, 0.594849, 5.20898)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="map" unique_id=806369709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8049, 8.32433, -20.4119)
 use_collision = true
 size = Vector3(15.1157, 17.6487, 16.855)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="map" unique_id=1696550639]
 transform = Transform3D(1, 0, 0, 0, 0.486656, -0.873594, 0, 0.873594, 0.486656, 0, 18.3001, 33.8081)
 use_collision = true
 size = Vector3(10, 85.093, 1)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D6" type="CSGBox3D" parent="map" unique_id=2008302282]
 transform = Transform3D(1, 0, 0, 0, 0.132879, -0.991132, 0, 0.991132, 0.132879, -57.0276, 0.254764, 3.1183)
 use_collision = true
 size = Vector3(10, 14.8321, 1)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D7" type="CSGBox3D" parent="map" unique_id=1998197971]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -57.028, 1.245, 17.87)
 use_collision = true
 size = Vector3(10, 14.8321, 1)
 material = ExtResource("3_6s1rt")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="map"]
+[node name="CSGBox3D5" type="CSGBox3D" parent="map" unique_id=2033205610]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 38.945, 113.275)
 use_collision = true
 size = Vector3(10, 85.093, 1)
 material = ExtResource("3_6s1rt")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=473191252]
 environment = SubResource("Environment_q6cjc")
 compositor = SubResource("Compositor_26g4g")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1823362914]
 transform = Transform3D(1, 0, 0, 0, 0.800888, 0.598814, 0, -0.598814, 0.800888, 0, 4.4221, 0)
 shadow_enabled = true

@@ -1,27 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://ifh0620nha84"]
+[gd_scene format=3 uid="uid://ifh0620nha84"]
 
 [ext_resource type="Script" uid="uid://nfgxcjjeqy53" path="res://scripts/multiplayer.gd" id="1_i6dgd"]
 [ext_resource type="PackedScene" uid="uid://ci2k4eganebbs" path="res://scenes/player.tscn" id="2_8rxc6"]
 [ext_resource type="PackedScene" uid="uid://1d8h7r1pvaps" path="res://scenes/world/world.tscn" id="3_gow6c"]
 
-[node name="multiplayer" type="Node3D"]
+[node name="multiplayer" type="Node3D" unique_id=275967887]
 script = ExtResource("1_i6dgd")
 player_scene = ExtResource("2_8rxc6")
 
-[node name="world" parent="." instance=ExtResource("3_gow6c")]
+[node name="world" parent="." unique_id=1056001208 instance=ExtResource("3_gow6c")]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=500950720]
+_spawnable_scenes = PackedStringArray("uid://ci2k4eganebbs")
 spawn_path = NodePath("..")
 
-[node name="host" type="Button" parent="."]
+[node name="host" type="Button" parent="." unique_id=628460839]
 offset_left = 392.0
 offset_top = 298.0
 offset_right = 517.0
 offset_bottom = 346.0
 text = "Host"
 
-[node name="join" type="Button" parent="."]
+[node name="join" type="Button" parent="." unique_id=355208107]
 offset_left = 679.0
 offset_top = 300.0
 offset_right = 801.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://duvu85h044tvc"]
+[gd_scene format=3 uid="uid://duvu85h044tvc"]
 
 [ext_resource type="PackedScene" uid="uid://bnpk46c06o8ly" path="res://prefabs/to_menu/to_menu.tscn" id="1_7rgiv"]
 [ext_resource type="Script" uid="uid://3xiktqxv4a5f" path="res://scripts/model_test.gd" id="1_fud8n"]
@@ -21,12 +21,12 @@ size = Vector2(10, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1c5hl"]
 
-[node name="model_test" type="Node3D"]
+[node name="model_test" type="Node3D" unique_id=987138871]
 script = ExtResource("1_fud8n")
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="GUI" type="CanvasLayer" parent="." unique_id=735706602]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=562201490]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -37,53 +37,53 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer" unique_id=2106254035]
 layout_mode = 2
 
-[node name="top_bar" type="HBoxContainer" parent="GUI/VBoxContainer/VBoxContainer"]
+[node name="top_bar" type="HBoxContainer" parent="GUI/VBoxContainer/VBoxContainer" unique_id=485776078]
 layout_mode = 2
 alignment = 1
 
-[node name="to_menu" parent="GUI/VBoxContainer/VBoxContainer/top_bar" instance=ExtResource("1_7rgiv")]
+[node name="to_menu" parent="GUI/VBoxContainer/VBoxContainer/top_bar" unique_id=373098760 instance=ExtResource("1_7rgiv")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GUI/VBoxContainer/VBoxContainer/top_bar"]
+[node name="Label" type="Label" parent="GUI/VBoxContainer/VBoxContainer/top_bar" unique_id=486815183]
 layout_mode = 2
 text = "DFF Viewer"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer" unique_id=902892843]
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="GUI/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="GUI/VBoxContainer/HBoxContainer" unique_id=533000610]
 layout_mode = 2
 text = "Select file"
 
-[node name="SpinBox" type="SpinBox" parent="GUI/VBoxContainer/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="GUI/VBoxContainer/HBoxContainer" unique_id=1489723971]
 layout_mode = 2
 alignment = 1
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1436688571]
 transform = Transform3D(0.818589, 0.497428, -0.287189, -3.52742e-08, 0.499998, 0.866026, 0.574379, -0.70892, 0.409293, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=88028168]
 environment = SubResource("Environment_3567p")
 
-[node name="reference" type="MeshInstance3D" parent="."]
+[node name="reference" type="MeshInstance3D" parent="." unique_id=337584737]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 visible = false
 mesh = SubResource("CapsuleMesh_mlknp")
 
-[node name="floor" type="MeshInstance3D" parent="."]
+[node name="floor" type="MeshInstance3D" parent="." unique_id=1508278441]
 visible = false
 material_override = ExtResource("2_gok33")
 mesh = SubResource("PlaneMesh_jjs8n")
 
-[node name="mesh" type="MeshInstance3D" parent="."]
+[node name="mesh" type="MeshInstance3D" parent="." unique_id=1992342132]
 material_override = SubResource("StandardMaterial3D_1c5hl")
 
-[node name="flycam" parent="." instance=ExtResource("4_xmsg8")]
+[node name="flycam" parent="." unique_id=494160582 instance=ExtResource("4_xmsg8")]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 1, 1, 1)
 
 [connection signal="pressed" from="GUI/VBoxContainer/HBoxContainer/Button" to="." method="_ld_dff"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://db2eg3psv01ra"]
+[gd_scene format=3 uid="uid://db2eg3psv01ra"]
 
 [ext_resource type="Script" uid="uid://bq4ba2ldahgty" path="res://scripts/map_test.gd" id="1_b8hlh"]
 [ext_resource type="PackedScene" uid="uid://bnpk46c06o8ly" path="res://prefabs/to_menu/to_menu.tscn" id="2_butse"]
@@ -17,19 +17,19 @@ sky = SubResource("Sky_njxv5")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="map_test" type="Node3D"]
+[node name="map_test" type="Node3D" unique_id=59178664]
 script = ExtResource("1_b8hlh")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=887816886]
 environment = SubResource("Environment_7d6in")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1705699413]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="GUI" type="CanvasLayer" parent="." unique_id=201893315]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=2095499539]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -40,20 +40,20 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="top_bar" type="HBoxContainer" parent="GUI/VBoxContainer"]
+[node name="top_bar" type="HBoxContainer" parent="GUI/VBoxContainer" unique_id=1820263031]
 layout_mode = 2
 alignment = 1
 
-[node name="to_menu" parent="GUI/VBoxContainer/top_bar" instance=ExtResource("2_butse")]
+[node name="to_menu" parent="GUI/VBoxContainer/top_bar" unique_id=750889027 instance=ExtResource("2_butse")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GUI/VBoxContainer/top_bar"]
+[node name="Label" type="Label" parent="GUI/VBoxContainer/top_bar" unique_id=8419211]
 layout_mode = 2
 text = "Map loader test"
 
-[node name="Label" type="Label" parent="GUI"]
+[node name="Label" type="Label" parent="GUI" unique_id=2146773988]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Press space to spawn Suzanne"
 
-[node name="flycam" parent="." instance=ExtResource("3_850h8")]
+[node name="flycam" parent="." unique_id=68574483 instance=ExtResource("3_850h8")]

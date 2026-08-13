@@ -1,14 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbqiivbia7d5d"]
+[gd_scene format=3 uid="uid://cbqiivbia7d5d"]
 
 [ext_resource type="Script" uid="uid://brwrpw6aogbsi" path="res://scripts/systems/VehicleCameraController.gd" id="1_p1l74"]
 
-[node name="VehicleCameraController" type="Node3D"]
+[node name="VehicleCameraController" type="Node3D" unique_id=378518906]
 script = ExtResource("1_p1l74")
 max_steering_rotation = 15.0
 
-[node name="Pivot" type="Node3D" parent="."]
+[node name="Pivot" type="Node3D" parent="." unique_id=1275639640]
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot" unique_id=1963599226]
 spring_length = 5.0
 
-[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D" unique_id=1453967561]

@@ -1,22 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3a5xdotn86ho"]
+[gd_scene format=3 uid="uid://d3a5xdotn86ho"]
 
 [ext_resource type="Script" uid="uid://d3myvlu45onr" path="res://scripts/car/3d_sound.gd" id="1_0iy6i"]
 
-[node name="3d_sound" type="Node3D"]
+[node name="3d_sound" type="Node3D" unique_id=233396721]
 script = ExtResource("1_0iy6i")
 
-[node name="back_left_speaker" type="AudioStreamPlayer3D" parent="."]
+[node name="back_left_speaker" type="AudioStreamPlayer3D" parent="." unique_id=550027837]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.448201, 0.978901, -0.955287)
 unit_size = 0.3
 
-[node name="back_right_speaker" type="AudioStreamPlayer3D" parent="."]
+[node name="back_right_speaker" type="AudioStreamPlayer3D" parent="." unique_id=1372637429]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.510358, 0.907754, -0.847175)
 unit_size = 0.3
 
-[node name="front_right_speaker" type="AudioStreamPlayer3D" parent="."]
+[node name="front_right_speaker" type="AudioStreamPlayer3D" parent="." unique_id=1889873069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.509298, 0.90145, 0.660546)
 unit_size = 0.3
 
-[node name="front_left_speaker" type="AudioStreamPlayer3D" parent="."]
+[node name="front_left_speaker" type="AudioStreamPlayer3D" parent="." unique_id=466117031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4893, 0.912202, 0.700955)
 unit_size = 0.3

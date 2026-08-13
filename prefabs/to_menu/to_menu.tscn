@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnpk46c06o8ly"]
+[gd_scene format=3 uid="uid://bnpk46c06o8ly"]
 
 [ext_resource type="Script" uid="uid://courgr50f6lei" path="res://prefabs/to_menu/to_menu.gd" id="1_kxd7i"]
 
-[node name="to_menu" type="Button"]
+[node name="to_menu" type="Button" unique_id=208828170]
 offset_right = 8.0
 offset_bottom = 8.0
 size_flags_horizontal = 0

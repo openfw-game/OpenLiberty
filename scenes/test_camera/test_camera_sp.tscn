@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceduldihfv4qn"]
+[gd_scene format=3 uid="uid://ceduldihfv4qn"]
 
 [ext_resource type="PackedScene" uid="uid://7kpoyini1lat" path="res://scenes/single_player.tscn" id="1_jl3t4"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=1282731958]
 
-[node name="camera" type="Camera3D" parent="."]
+[node name="camera" type="Camera3D" parent="." unique_id=737154245]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 6.51293, -7.5778)
 fov = 90.0
 
-[node name="single_player" parent="." instance=ExtResource("1_jl3t4")]
+[node name="single_player" parent="." unique_id=1442611171 instance=ExtResource("1_jl3t4")]

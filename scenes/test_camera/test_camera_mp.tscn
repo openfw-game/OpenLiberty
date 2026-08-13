@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c18w33kpfxo6y"]
+[gd_scene format=3 uid="uid://c18w33kpfxo6y"]
 
 [ext_resource type="PackedScene" uid="uid://ifh0620nha84" path="res://scenes/multiplayer.tscn" id="1_oj5b4"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=951003568]
 
-[node name="camera" type="Camera3D" parent="."]
+[node name="camera" type="Camera3D" parent="." unique_id=1896565935]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 6.51293, -7.5778)
 fov = 90.0
 
-[node name="multiplayer" parent="." instance=ExtResource("1_oj5b4")]
+[node name="multiplayer" parent="." unique_id=777283837 instance=ExtResource("1_oj5b4")]

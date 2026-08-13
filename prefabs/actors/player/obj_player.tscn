@@ -1,7 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://yo0220jx0v3r"]
-
-[sub_resource type="Resource" id="Resource_3xqip"]
-metadata/__load_path__ = "res://scripts/gameplay/player/obj_player.gd"
+[gd_scene format=4 uid="uid://yo0220jx0v3r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tl83o"]
 resource_name = "Material.001"
@@ -110,15 +107,14 @@ bind/24/pose = Transform3D(0.998213, -1.72623, -0.153902, 0.466768, 0.0967433, 1
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eidr1"]
 radius = 0.37
 
-[node name="obj_player" type="CharacterBody3D"]
-script = SubResource("Resource_3xqip")
+[node name="obj_player" type="CharacterBody3D" unique_id=1164910779]
 
-[node name="mesh" type="Node3D" parent="."]
+[node name="mesh" type="Node3D" parent="." unique_id=1448276209]
 
-[node name="MaleArm" type="Node3D" parent="mesh"]
+[node name="MaleArm" type="Node3D" parent="mesh" unique_id=1080086377]
 transform = Transform3D(-0.5, -4.37114e-08, -2.6054e-15, 0, 2.98023e-08, -0.5, 4.37114e-08, -0.5, -2.98023e-08, 0, 0.599321, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="mesh/MaleArm"]
+[node name="Skeleton3D" type="Skeleton3D" parent="mesh/MaleArm" unique_id=205441203]
 bones/0/name = "Back"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 0.0527629, -0.998607, 0, 0.998607, 0.0527629, 0, -0.149781, 0.194208)
@@ -295,19 +291,20 @@ bones/24/position = Vector3(3.33239e-09, 0.115729, 8.46339e-08)
 bones/24/rotation = Quaternion(-0.007948, 0.247788, 0.00887308, 0.968741)
 bones/24/scale = Vector3(1, 1, 1)
 
-[node name="HumanMale" type="MeshInstance3D" parent="mesh/MaleArm/Skeleton3D"]
+[node name="HumanMale" type="MeshInstance3D" parent="mesh/MaleArm/Skeleton3D" unique_id=1066512357]
 mesh = SubResource("ArrayMesh_7xqwr")
 skin = SubResource("Skin_kcspo")
+skeleton = NodePath("..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="mesh/MaleArm"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="mesh/MaleArm" unique_id=2086150511]
 
-[node name="collision" type="CollisionShape3D" parent="."]
+[node name="collision" type="CollisionShape3D" parent="." unique_id=1355099791]
 shape = SubResource("CapsuleShape3D_eidr1")
 
-[node name="cameraPivot" type="Node3D" parent="."]
+[node name="cameraPivot" type="Node3D" parent="." unique_id=614971248]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.665141, 0)
 
-[node name="SpringArm" type="SpringArm3D" parent="cameraPivot"]
+[node name="SpringArm" type="SpringArm3D" parent="cameraPivot" unique_id=1024432447]
 spring_length = 2.0
 
-[node name="camera" type="Camera3D" parent="cameraPivot/SpringArm"]
+[node name="camera" type="Camera3D" parent="cameraPivot/SpringArm" unique_id=505776213]

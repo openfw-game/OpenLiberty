@@ -1,31 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://ci2k4eganebbs"]
+[gd_scene format=3 uid="uid://ci2k4eganebbs"]
 
 [ext_resource type="PackedScene" uid="uid://bhnf2ypniaum0" path="res://scenes/car.tscn" id="1_0aqsi"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_pc2or"]
-[ext_resource type="Script" path="res://scripts/car/microphone.gd" id="2_b6cpr"]
+[ext_resource type="Script" uid="uid://dchs4nj76a8sx" path="res://scripts/player/player.gd" id="1_pc2or"]
+[ext_resource type="Script" uid="uid://ce8xvgv6el0dn" path="res://scripts/car/microphone.gd" id="2_b6cpr"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_re4ln"]
 
-[node name="player" type="Node3D"]
+[node name="player" type="Node3D" unique_id=1077604261]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="car" parent="." instance=ExtResource("1_0aqsi")]
+[node name="car" parent="." unique_id=657394998 instance=ExtResource("1_0aqsi")]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="car"]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="car" unique_id=173194267]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.862511, 0)
 script = ExtResource("1_pc2or")
 
-[node name="cam_origin" type="Node3D" parent="car/CharacterBody3D"]
+[node name="cam_origin" type="Node3D" parent="car/CharacterBody3D" unique_id=1364207181]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155749, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="car/CharacterBody3D/cam_origin"]
+[node name="SpringArm3D" type="SpringArm3D" parent="car/CharacterBody3D/cam_origin" unique_id=668370413]
 spring_length = 6.0
 margin = 0.5
 
-[node name="camera" type="Camera3D" parent="car/CharacterBody3D/cam_origin/SpringArm3D"]
+[node name="camera" type="Camera3D" parent="car/CharacterBody3D/cam_origin/SpringArm3D" unique_id=1534574063]
 current = true
 
-[node name="microphone" type="AudioStreamPlayer3D" parent="car/CharacterBody3D"]
+[node name="microphone" type="AudioStreamPlayer3D" parent="car/CharacterBody3D" unique_id=981360762]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0516357, 0.237411, -0.0943298)
 stream = SubResource("AudioStreamMicrophone_re4ln")
 unit_size = 0.3

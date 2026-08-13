@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c50i7vaus60dl"]
+[gd_scene format=3 uid="uid://c50i7vaus60dl"]
 
 [ext_resource type="Script" uid="uid://7qfc865s65hm" path="res://scripts/txd.gd" id="1_4uo24"]
 [ext_resource type="PackedScene" uid="uid://bnpk46c06o8ly" path="res://prefabs/to_menu/to_menu.tscn" id="1_xoe8g"]
 [ext_resource type="Texture2D" uid="uid://n4ajg6343i77" path="res://icon.svg" id="3_y7lf0"]
 
-[node name="txd" type="Control"]
+[node name="txd" type="Control" unique_id=816122659]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4uo24")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=968159120]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,29 +21,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="top_bar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="top_bar" type="HBoxContainer" parent="VBoxContainer" unique_id=1702913669]
 layout_mode = 2
 alignment = 1
 
-[node name="to_menu" parent="VBoxContainer/top_bar" instance=ExtResource("1_xoe8g")]
+[node name="to_menu" parent="VBoxContainer/top_bar" unique_id=887074255 instance=ExtResource("1_xoe8g")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/top_bar"]
+[node name="Label" type="Label" parent="VBoxContainer/top_bar" unique_id=1457060844]
 layout_mode = 2
 text = "Texture viewer"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=279271523]
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1322616915]
 layout_mode = 2
 text = "Select file"
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=443334232]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=1509668067]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("3_y7lf0")

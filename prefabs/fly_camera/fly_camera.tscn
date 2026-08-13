@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt041qrw0l2bm"]
+[gd_scene format=3 uid="uid://bt041qrw0l2bm"]
 
 [ext_resource type="Script" uid="uid://d23sjdyuspeti" path="res://prefabs/fly_camera/fly_camera.gd" id="1_ukugh"]
 
-[node name="flycam" type="Camera3D"]
+[node name="flycam" type="Camera3D" unique_id=830223463]
 script = ExtResource("1_ukugh")

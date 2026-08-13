@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnxwox43mmj07"]
+[gd_scene format=3 uid="uid://dnxwox43mmj07"]
 
 [ext_resource type="Environment" uid="uid://ccr7xp2qxu2g3" path="res://scenes/world/test.tres" id="1_2h2e7"]
 
@@ -8,13 +8,13 @@ size = Vector3(20, 1, 20)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7rwwr"]
 data = PackedVector3Array(-10, 0.5, 10, 10, 0.5, 10, -10, -0.5, 10, 10, 0.5, 10, 10, -0.5, 10, -10, -0.5, 10, 10, 0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, 0.5, -10, -10, -0.5, -10, 10, -0.5, -10, 10, 0.5, 10, 10, 0.5, -10, 10, -0.5, 10, 10, 0.5, -10, 10, -0.5, -10, 10, -0.5, 10, -10, 0.5, -10, -10, 0.5, 10, -10, -0.5, -10, -10, 0.5, 10, -10, -0.5, 10, -10, -0.5, -10, 10, 0.5, 10, -10, 0.5, 10, 10, 0.5, -10, -10, 0.5, 10, -10, 0.5, -10, 10, 0.5, -10, -10, -0.5, 10, 10, -0.5, 10, -10, -0.5, -10, 10, -0.5, 10, 10, -0.5, -10, -10, -0.5, -10)
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=728360528]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=511434618]
 mesh = SubResource("BoxMesh_aqhx6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1166825438]
 shape = SubResource("ConcavePolygonShape3D_7rwwr")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=144454707]
 environment = ExtResource("1_2h2e7")

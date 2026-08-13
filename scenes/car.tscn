@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://bhnf2ypniaum0"]
+[gd_scene format=4 uid="uid://bhnf2ypniaum0"]
 
 [ext_resource type="Script" uid="uid://dgbmjswauaoxr" path="res://scripts/car/car.gd" id="1_srwvd"]
 [ext_resource type="Texture2D" uid="uid://68wfpqbugcdf" path="res://mods/cars/car1_001_COLOR_BASIC.png" id="2_airkg"]
@@ -395,48 +395,42 @@ properties/2/path = NodePath(".:steering")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="car" type="VehicleBody3D"]
+[node name="car" type="VehicleBody3D" unique_id=209507049]
 mass = 50.0
 gravity_scale = 4.0
 script = ExtResource("1_srwvd")
 
-[node name="body" type="MeshInstance3D" parent="."]
+[node name="body" type="MeshInstance3D" parent="." unique_id=2012516895]
 transform = Transform3D(1.00047, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_tqbb2")
-skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=861873947]
 transform = Transform3D(1.00047, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_3m0qi")
 
-[node name="left_door" type="MeshInstance3D" parent="."]
+[node name="left_door" type="MeshInstance3D" parent="." unique_id=1936294629]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.675982, 0.570849, 0.697287)
 mesh = SubResource("ArrayMesh_3j1wr")
-skeleton = NodePath("")
 
-[node name="right-door-window" type="MeshInstance3D" parent="left_door"]
+[node name="right-door-window" type="MeshInstance3D" parent="left_door" unique_id=1738043504]
 transform = Transform3D(1.00047, 0, 0, 0, 1, 0, 0, 0, 1, 0.0985955, 0.518596, -0.490723)
 visible = false
 mesh = SubResource("ArrayMesh_jwmij")
-skeleton = NodePath("")
 
-[node name="right_door" type="MeshInstance3D" parent="."]
+[node name="right_door" type="MeshInstance3D" parent="." unique_id=465886839]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.675982, 0.570849, 0.697287)
 mesh = SubResource("ArrayMesh_tey87")
-skeleton = NodePath("")
 
-[node name="right-door-window" type="MeshInstance3D" parent="right_door"]
+[node name="right-door-window" type="MeshInstance3D" parent="right_door" unique_id=1994478689]
 transform = Transform3D(1.00047, 0, 0, 0, 1, 0, 0, 0, 1, -0.0985955, 0.518596, -0.490723)
 visible = false
 mesh = SubResource("ArrayMesh_bwtq2")
-skeleton = NodePath("")
 
-[node name="interior" type="MeshInstance3D" parent="."]
+[node name="interior" type="MeshInstance3D" parent="." unique_id=1895430974]
 transform = Transform3D(0.979133, 0, 0, 0, 0.979133, 0, 0, 0, 0.979133, -0.0380644, 0.718583, 0.560221)
 mesh = SubResource("ArrayMesh_bmyof")
-skeleton = NodePath("")
 
-[node name="front_left_wheel" type="VehicleWheel3D" parent="."]
+[node name="front_left_wheel" type="VehicleWheel3D" parent="." unique_id=1741533542]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.472146, 0.266109, 1.07063)
 use_as_steering = true
 wheel_roll_influence = 0.01
@@ -445,11 +439,10 @@ wheel_rest_length = 0.2
 wheel_friction_slip = 1.4
 suspension_stiffness = 80.0
 
-[node name="front-left-wheel" type="MeshInstance3D" parent="front_left_wheel"]
+[node name="front-left-wheel" type="MeshInstance3D" parent="front_left_wheel" unique_id=2093518000]
 mesh = SubResource("ArrayMesh_gfuya")
-skeleton = NodePath("")
 
-[node name="front_right_wheel" type="VehicleWheel3D" parent="."]
+[node name="front_right_wheel" type="VehicleWheel3D" parent="." unique_id=1965827172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.472146, 0.266109, 1.07063)
 use_as_steering = true
 wheel_roll_influence = 0.01
@@ -458,11 +451,10 @@ wheel_rest_length = 0.2
 wheel_friction_slip = 1.4
 suspension_stiffness = 80.0
 
-[node name="front-right-wheel" type="MeshInstance3D" parent="front_right_wheel"]
+[node name="front-right-wheel" type="MeshInstance3D" parent="front_right_wheel" unique_id=680423461]
 mesh = SubResource("ArrayMesh_wauk7")
-skeleton = NodePath("")
 
-[node name="back_left_wheel" type="VehicleWheel3D" parent="."]
+[node name="back_left_wheel" type="VehicleWheel3D" parent="." unique_id=24905860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.573323, 0.266109, -0.783897)
 use_as_traction = true
 wheel_roll_influence = 0.01
@@ -472,11 +464,10 @@ wheel_friction_slip = 1.1
 suspension_travel = 0.15
 suspension_stiffness = 80.0
 
-[node name="back-left-wheel" type="MeshInstance3D" parent="back_left_wheel"]
+[node name="back-left-wheel" type="MeshInstance3D" parent="back_left_wheel" unique_id=582134958]
 mesh = SubResource("ArrayMesh_u7pbs")
-skeleton = NodePath("")
 
-[node name="back_right_wheel" type="VehicleWheel3D" parent="."]
+[node name="back_right_wheel" type="VehicleWheel3D" parent="." unique_id=1641284907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.573323, 0.266109, -0.783897)
 use_as_traction = true
 wheel_roll_influence = 0.01
@@ -486,37 +477,35 @@ wheel_friction_slip = 1.1
 suspension_travel = 0.15
 suspension_stiffness = 80.0
 
-[node name="back-right-wheel" type="MeshInstance3D" parent="back_right_wheel"]
+[node name="back-right-wheel" type="MeshInstance3D" parent="back_right_wheel" unique_id=450244983]
 mesh = SubResource("ArrayMesh_5xu5a")
-skeleton = NodePath("")
 
-[node name="windows" type="MeshInstance3D" parent="."]
+[node name="windows" type="MeshInstance3D" parent="." unique_id=1015119973]
 transform = Transform3D(1.00047, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11079, -0.416)
 visible = false
 mesh = SubResource("ArrayMesh_gwla8")
-skeleton = NodePath("")
 
-[node name="lights" type="Node3D" parent="."]
+[node name="lights" type="Node3D" parent="." unique_id=938831749]
 script = ExtResource("3_32e0k")
 
-[node name="right_light" type="SpotLight3D" parent="lights"]
+[node name="right_light" type="SpotLight3D" parent="lights" unique_id=1565886006]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.510644, 0.66487, 1.6175)
 light_energy = 16.0
 shadow_enabled = true
 spot_range = 50.0
 
-[node name="left_light" type="SpotLight3D" parent="lights"]
+[node name="left_light" type="SpotLight3D" parent="lights" unique_id=1715165491]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.505118, 0.66487, 1.6175)
 light_energy = 16.0
 shadow_enabled = true
 spot_range = 50.0
 
-[node name="internal_light" type="OmniLight3D" parent="lights"]
+[node name="internal_light" type="OmniLight3D" parent="lights" unique_id=1529498915]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.915422, 0)
 shadow_enabled = true
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=502021793]
 replication_config = SubResource("SceneReplicationConfig_u2rii")
 
-[node name="private_speaker" type="AudioStreamPlayer" parent="."]
+[node name="private_speaker" type="AudioStreamPlayer" parent="." unique_id=208580521]
 script = ExtResource("5_uun7x")

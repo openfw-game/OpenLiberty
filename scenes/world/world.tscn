@@ -1,18 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://1d8h7r1pvaps"]
+[gd_scene format=3 uid="uid://1d8h7r1pvaps"]
 
 [ext_resource type="Script" uid="uid://clfvwpxyw558a" path="res://scripts/world.gd" id="1_s3ncu"]
 
-[node name="world" type="Node3D"]
+[node name="world" type="Node3D" unique_id=1784512571]
 script = ExtResource("1_s3ncu")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1379582326]
 
-[node name="sun" type="DirectionalLight3D" parent="."]
+[node name="sun" type="DirectionalLight3D" parent="." unique_id=162177349]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 50.0
 
-[node name="moon" type="DirectionalLight3D" parent="."]
+[node name="moon" type="DirectionalLight3D" parent="." unique_id=2087420061]
 transform = Transform3D(-0.866025, 0.433013, -0.25, 0, 0.5, 0.866025, 0.5, 0.75, -0.433013, 0, 0, 0)
 light_color = Color(0, 0.243591, 0.243591, 1)
 shadow_enabled = true
