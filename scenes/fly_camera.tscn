@@ -9,25 +9,4 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1226, 73, -405)
 current = true
 
-[node name="camera_position_x" type="Label" parent="fly_camera" unique_id=642682938]
-offset_left = 381.0
-offset_top = 3.0
-offset_right = 471.0
-offset_bottom = 43.0
-horizontal_alignment = 1
-
-[node name="camera_position_y" type="Label" parent="fly_camera" unique_id=1081343035]
-offset_left = 490.0
-offset_top = 2.0
-offset_right = 580.0
-offset_bottom = 42.0
-horizontal_alignment = 1
-
-[node name="camera_position_z" type="Label" parent="fly_camera" unique_id=983165494]
-offset_left = 598.0
-offset_top = 1.0
-offset_right = 688.0
-offset_bottom = 41.0
-horizontal_alignment = 1
-
 [node name="world" parent="." unique_id=2143379155 instance=ExtResource("1_qnmje")]
