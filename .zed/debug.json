@@ -1,0 +1,22 @@
+// Project-local debug tasks
+//
+// For more documentation on how to configure debug tasks,
+// see: https://zed.dev/docs/debugger
+[
+  {
+    "adapter": "godot",
+    "label": "Godot (Launch)",
+    "request": "launch",
+  },
+  {
+    "adapter": "godot",
+    "label": "Godot (Launch Current Scene)",
+    "request": "launch",
+    "scene": "current",
+  },
+  {
+    "adapter": "godot",
+    "label": "Godot (Attach)",
+    "request": "attach",
+  },
+]
