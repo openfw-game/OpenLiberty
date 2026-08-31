@@ -23,6 +23,10 @@ driver/enable_input=true
 
 GameManager="*res://scripts/game_manager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/atirutw.renderware/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false
