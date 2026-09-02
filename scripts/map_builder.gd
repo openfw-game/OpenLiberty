@@ -8,7 +8,7 @@ var map: Node3D
 var _loaded := false
 
 func _ready() -> void:
-	var file := FileAccess.open(GameManager.gta_path + "data/gta3.dat", FileAccess.READ)
+	var file := NoCaseFS.open(GameManager.gta_path.path_join("data/gta3.dat"), FileAccess.READ)
 	assert(file != null, "%d" % FileAccess.get_open_error())
 	while not file.eof_reached():
 		var line := file.get_line()
@@ -19,14 +19,14 @@ func _ready() -> void:
 					"IDE":
 						_read_map_data(tokens[1], _read_ide_line)
 					"COLFILE":
-						var colfile := AssetLoader.open(GameManager.gta_path + tokens[2])
-						
+						var colfile := NoCaseFS.open(GameManager.gta_path.path_join(tokens[2].replace("\\", "/")), FileAccess.READ)
+
 						while colfile.get_position() < colfile.get_length():
 							collisions.append(ColFile.new(colfile))
 					"IPL":
 						_read_map_data(tokens[1], _read_ipl_line)
 					"CDIMAGE":
-						AssetLoader.load_cd_image(tokens[1])
+						ModelFS.add_cd_image(GameManager.gta_path.path_join(tokens[1].replace("\\", "/")))
 					_:
 						push_warning("implement %s" % tokens[0])
 	for child in itemchilds:
@@ -104,7 +104,7 @@ func _read_ipl_line(section: String, tokens: Array[String]):
 			placements.append(placement)
 
 func _read_map_data(path: String, line_handler: Callable) -> void:
-	var file := AssetLoader.open(path)
+	var file := NoCaseFS.open(GameManager.gta_path.path_join(path.replace("\\", "/")), FileAccess.READ)
 	assert(file != null, "%d" % FileAccess.get_open_error() )
 	var section: String
 	while not file.eof_reached():
@@ -153,7 +153,7 @@ func spawn(id: int, model_name: String, position: Vector3, scale: Vector3, rotat
 				# Get min and max positions from collision box
 				var min_pos := collision.min as Vector3
 				var max_pos := collision.max as Vector3
-				
+
 				# Ensure AABB has positive size by sorting min/max for each axis
 				aabb.position = Vector3(
 					min(min_pos.x, max_pos.x),
@@ -165,7 +165,7 @@ func spawn(id: int, model_name: String, position: Vector3, scale: Vector3, rotat
 					max(min_pos.y, max_pos.y),
 					max(min_pos.z, max_pos.z)
 				)
-				
+
 				# Only create the shape if size is valid
 				if aabb.size.x > 0 and aabb.size.y > 0 and aabb.size.z > 0:
 					var shape := BoxShape3D.new()

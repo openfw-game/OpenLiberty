@@ -23,7 +23,6 @@ driver/enable_input=true
 
 GameManager="*res://scripts/game_manager.gd"
 MapBuilder="*res://scripts/map_builder.gd"
-AssetLoader="*res://scripts/asset_loader.gd"
 
 [filesystem]
 
