@@ -72,17 +72,24 @@ func instantiate() -> Node3D:
 		if object.model_name.begins_with("IslandLOD"):
 			continue
 
-		var node := StreamedMesh.new(object)
+		if object.flags & 0x40: # Ignore shadows
+			continue
+
+		var node := RWClumpInstance.new()
 		node.transform = Utils.gta_to_godot(instance.transform)
-		node.visibility_range_end = object.draw_distances[0]
-		if object.is_big_building and not object.is_lod:
-			node.visibility_range_begin = 300.0
 		root.add_child(node)
+		if _load_clump(node, object):
+			_apply_object_flags(node, object)
+			for atomic in node.atomics:
+				atomic.visibility_range_end = object.draw_distances[0]
+				if object.is_big_building and not object.is_lod:
+					atomic.visibility_range_begin = 300.0
 
 		if object.is_lod:
 			var base: ItemDefinition.ObjectDef = lod_map.get(object.model_name.to_lower(), null)
 			if base != null:
-				node.visibility_range_begin = base.draw_distances[0]
+				for atomic in node.atomics:
+					atomic.visibility_range_begin = base.draw_distances[0]
 			continue
 
 		var model: CollisionFile.CollisionModel = collisions.get(object.model_name.to_lower(), null)
@@ -93,6 +100,35 @@ func instantiate() -> Node3D:
 			_spawn_light(node, light)
 
 	return root
+
+
+func _load_clump(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> bool:
+	var dff_path := ModelFS.resolve(object.model_name + ".dff")
+	if dff_path.is_empty():
+		return false
+	var loaded := ResourceLoader.load(dff_path, "Resource", ResourceLoader.CACHE_MODE_REUSE) as RWClump
+	if loaded == null:
+		return false
+	node.clump = loaded
+	return true
+
+
+func _apply_object_flags(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> void:
+	for atomic in node.atomics:
+		var mesh := atomic.mesh
+		for surf_id in mesh.get_surface_count():
+			var material := mesh.surface_get_material(surf_id) as StandardMaterial3D
+			if material == null:
+				continue
+			material.cull_mode = BaseMaterial3D.CULL_DISABLED
+			if object.flags & 0x04:
+				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+			else:
+				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+			if object.flags & 0x08:
+				material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+				material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mesh.surface_set_material(surf_id, material)
 
 
 func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
