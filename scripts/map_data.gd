@@ -67,6 +67,11 @@ func instantiate() -> Node3D:
 			push_error("Instance references unknown object with ID %d" % instance.object_id)
 			continue
 
+		# TODO: IslandLOD visibility is level-driven (CStreaming::RequestIslands),
+		# not distance-driven. Needs zone/level parsing before these can be placed.
+		if object.model_name.begins_with("IslandLOD"):
+			continue
+
 		var node := StreamedMesh.new(object)
 		node.transform = Utils.gta_to_godot(instance.transform)
 		node.visibility_range_end = object.draw_distances[0]
