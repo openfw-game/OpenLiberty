@@ -1,6 +1,8 @@
 class_name MapData
 extends RefCounted
 
+const STATIC_LIGHTING_LAYER: int = 1 << 1
+
 var objects: Dictionary[int, ItemDefinition.ObjectDef] = { }
 var instances: Array[ItemPlacement.Instance] = []
 var collisions: Dictionary[String, CollisionFile.CollisionModel] = { }
@@ -115,20 +117,16 @@ func _load_clump(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> boo
 
 func _apply_object_flags(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> void:
 	for atomic in node.atomics:
+		if object.flags & 0x20 == 0:
+			atomic.layers = STATIC_LIGHTING_LAYER
+
 		var mesh := atomic.mesh
 		for surf_id in mesh.get_surface_count():
-			var material := mesh.surface_get_material(surf_id) as StandardMaterial3D
+			var material := mesh.surface_get_material(surf_id) as RWMaterial
 			if material == null:
 				continue
-			material.cull_mode = BaseMaterial3D.CULL_DISABLED
-			if object.flags & 0x04:
-				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
-			else:
-				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 			if object.flags & 0x08:
-				material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
-				material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-			mesh.surface_set_material(surf_id, material)
+				material.blend_mode = RWMaterial.BlendMode.ADD
 
 
 func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
@@ -140,6 +138,7 @@ func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
 	node.omni_range = light.outer_range
 	node.shadow_opacity = float(light.shadow_intensity) / 40.0
 	node.shadow_enabled = true
+	node.light_cull_mask &= ~STATIC_LIGHTING_LAYER
 	parent.add_child(node)
 
 

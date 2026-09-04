@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode depth_prepass_alpha, unshaded, cull_disabled;
+render_mode unshaded, blend_add, depth_draw_never, cull_disabled;
 
 uniform sampler2D texture : source_color, hint_default_white;
 uniform sampler2D mask;

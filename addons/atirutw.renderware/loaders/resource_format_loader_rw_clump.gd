@@ -135,7 +135,7 @@ func _read_geometry(geometry: RWChunk) -> ArrayMesh:
 	if struct == null:
 		return null
 
-	var materials: Array[ShaderMaterial] = []
+	var materials: Array[RWMaterial] = []
 	if _read_material_list(geometry.get_children()[1], materials) != OK:
 		return null
 
@@ -152,15 +152,15 @@ func _read_geometry(geometry: RWChunk) -> ArrayMesh:
 	var specular := struct.get_float() if geometry.version < 0x34000 else 0.0
 	var diffuse := struct.get_float() if geometry.version < 0x34000 else 0.0
 
+	var has_normals := (format & NORMALS != 0)
 	for mat in materials:
 		if geometry.version <= 0x30400:
-			mat.set_shader_parameter("ambient", ambient)
-			mat.set_shader_parameter("specular", specular)
-			mat.set_shader_parameter("diffuse", diffuse)
-		mat.set_shader_parameter("modulate", format & MODULATE_MATERIAL_COLOR != 0)
-		mat.set_shader_parameter("prelit", format & PRELIT != 0)
-		# TODO: Models without the LIGHT flag still get dynamic lighting.
-		mat.set_shader_parameter("lit", format & LIGHT != 0)
+			mat.ambient = ambient
+			mat.specular = specular
+			mat.diffuse = diffuse
+		mat.modulate = format & MODULATE_MATERIAL_COLOR != 0
+		mat.prelit = format & PRELIT != 0
+		mat.lit = (format & LIGHT != 0)
 
 	if format & NATIVE != 0:
 		push_error("Native geometries are not supported")
@@ -274,7 +274,7 @@ func _get_num_uvs(format: int) -> int:
 		return 0
 
 
-func _read_material_list(mlist: RWChunk, out_materials: Array[ShaderMaterial]) -> Error:
+func _read_material_list(mlist: RWChunk, out_materials: Array[RWMaterial]) -> Error:
 	if !mlist.expect(RWChunk.MATERIAL_LIST):
 		return ERR_INVALID_DATA
 	var struct := mlist.get_struct_stream()
@@ -303,7 +303,7 @@ func _read_material_list(mlist: RWChunk, out_materials: Array[ShaderMaterial]) -
 	return OK
 
 
-func _read_material(rw_material: RWChunk) -> ShaderMaterial:
+func _read_material(rw_material: RWChunk) -> RWMaterial:
 	if !rw_material.expect(RWChunk.MATERIAL):
 		return null
 	var struct := rw_material.get_struct_stream()
@@ -324,13 +324,12 @@ func _read_material(rw_material: RWChunk) -> ShaderMaterial:
 	var specular := struct.get_float() if rw_material.version > 0x30400 else 0.0
 	var diffuse := struct.get_float() if rw_material.version > 0x30400 else 0.0
 
-	var material := ShaderMaterial.new()
-	material.shader = RW_SHADER
-	material.set_shader_parameter("color", color)
+	var material := RWMaterial.new()
+	material.color = color
 	if rw_material.version > 0x30400:
-		material.set_shader_parameter("ambient", ambient)
-		material.set_shader_parameter("specular", specular)
-		material.set_shader_parameter("diffuse", diffuse)
+		material.ambient = ambient
+		material.specular = specular
+		material.diffuse = diffuse
 
 	if !textured:
 		return material
@@ -359,8 +358,8 @@ func _read_material(rw_material: RWChunk) -> ShaderMaterial:
 		return null
 	var maskname := maskname_stream.get_string(maskname_stream.get_available_bytes())
 
-	material.set_meta("texture_name", texname)
-	material.set_meta("mask_name", maskname)
+	material.texture_name = texname
+	material.mask_name = maskname
 
 	return material
 
