@@ -4,6 +4,15 @@ extends RefCounted
 var objects: Dictionary[int, ItemDefinition.ObjectDef] = { }
 var instances: Array[ItemPlacement.Instance] = []
 var collisions: Dictionary[String, CollisionFile.CollisionModel] = { }
+## Maps LOD model names (lowercase) to their base ObjectDef, built at IDE parse
+## time by replacing the first three characters of each base name with "LOD".
+##
+## NOTE: The "IslandLOD*" models (IslandLODInd, IslandLODcomIND, IslandLODcomSUB,
+## IslandLODsubIND, IslandLODsubCOM) are NOT covered by this convention.
+## In GTA3 their visibility is hard-coded (CStreaming::RequestIslands) and driven
+## by the player's current island level, not by distance. They need special-casing
+## once zone/level parsing lands.
+var lod_map: Dictionary[String, ItemDefinition.ObjectDef] = { }
 
 
 static func open(path: String) -> MapData:
@@ -28,6 +37,7 @@ static func open(path: String) -> MapData:
 				if defs == null:
 					return null
 				data.objects.merge(defs.objects)
+				data.lod_map.merge(defs.lod_map)
 			"IPL":
 				var placements := ItemPlacement.open(NoCaseFS.resolve(GameManager.gta_path.path_join(
 							tokens[1].replace("\\", "/")
@@ -50,7 +60,6 @@ static func open(path: String) -> MapData:
 
 func instantiate() -> Node3D:
 	var root := Node3D.new()
-	var lod_bases := _find_lod_bases()
 
 	for instance in instances:
 		var object: ItemDefinition.ObjectDef = objects.get(instance.object_id, null)
@@ -66,7 +75,7 @@ func instantiate() -> Node3D:
 		root.add_child(node)
 
 		if object.is_lod:
-			var base: ItemDefinition.ObjectDef = lod_bases.get(object.model_name.to_lower(), null)
+			var base: ItemDefinition.ObjectDef = lod_map.get(object.model_name.to_lower(), null)
 			if base != null:
 				node.visibility_range_begin = base.draw_distances[0]
 			continue
@@ -79,30 +88,6 @@ func instantiate() -> Node3D:
 			_spawn_light(node, light)
 
 	return root
-
-
-## Maps each LOD model name to its base object definition.
-##
-## NOTE: The "IslandLOD*" models (IslandLODInd, IslandLODcomIND, IslandLODcomSUB,
-## IslandLODsubIND, IslandLODsubCOM) are NOT covered by this prefix convention.
-## In GTA3 their visibility is hard-coded (CStreaming::RequestIslands) and driven
-## by the player's current island level, not by distance. They need special-casing
-## once zone/level parsing lands.
-func _find_lod_bases() -> Dictionary[String, ItemDefinition.ObjectDef]:
-	var by_name: Dictionary[String, ItemDefinition.ObjectDef] = {}
-	for id in objects:
-		by_name[objects[id].model_name.to_lower()] = objects[id]
-
-	var result: Dictionary[String, ItemDefinition.ObjectDef] = {}
-	for id in objects:
-		var base := objects[id] as ItemDefinition.ObjectDef
-		if base.is_lod or base.model_name.length() < 4:
-			continue
-		var lod_name := ("LOD" + base.model_name.substr(3)).to_lower()
-		if by_name.has(lod_name):
-			result[lod_name] = base
-
-	return result
 
 
 func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:

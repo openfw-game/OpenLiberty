@@ -2,6 +2,7 @@ class_name ItemDefinition
 extends RefCounted
 
 var objects: Dictionary[int, ObjectDef] = {}
+var lod_map: Dictionary[String, ObjectDef] = {}
 
 
 static func open(path: String) -> ItemDefinition:
@@ -53,6 +54,8 @@ func _parse_object(tokens: PackedStringArray) -> Error:
 
 	obj.flags = tokens[tokens.size() - 1].to_int()
 	objects[tokens[0].to_int()] = obj
+	if not obj.is_lod and obj.model_name.length() >= 4:
+		lod_map[("LOD" + obj.model_name.substr(3)).to_lower()] = obj
 	return OK
 
 
