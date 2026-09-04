@@ -100,9 +100,10 @@ func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
 	node.position = light.position
 	node.light_color = light.color
 	node.distance_fade_enabled = true
-	node.distance_fade_begin = light.view_distance / 2.0
+	node.distance_fade_begin = light.view_distance
 	node.omni_range = light.outer_range
-	node.light_energy = float(light.shadow_intensity) / 20.0
+	node.shadow_opacity = float(light.shadow_intensity) / 40.0
+	node.shadow_enabled = true
 	parent.add_child(node)
 
 
