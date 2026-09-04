@@ -5,8 +5,8 @@ extends RefCounted
 static var _search_paths: Array[String] = []
 ## Extracted CD images
 static var _cd_images: Array[String] = []
-## Temporary directory for extracted models
-static var _temp_dir := DirAccess.create_temp("openliberty-cdimage")
+## Directory for extracted models
+const _temp_dir := "user://models"
 
 
 ## Add directory to search paths
@@ -14,6 +14,11 @@ static func add_directory(path: String) -> void:
 	if NoCaseFS.index(path):
 		_search_paths.append(path)
 		print("Added '%s' to model search paths" % path)
+
+
+## Remove the extracted models directory and all of its contents.
+static func clear() -> void:
+	_remove_recursive(_temp_dir)
 
 
 ## Add CD image
@@ -26,6 +31,7 @@ static func add_cd_image(path: String) -> void:
 		return
 
 	print("Adding CD image '%s'..." % path)
+	DirAccess.make_dir_recursive_absolute(_temp_dir)
 	var entries: Array[DirEntry] = []
 	@warning_ignore("INTEGER_DIVISION")
 	for i in dir.get_length() / 32:
@@ -37,7 +43,7 @@ static func add_cd_image(path: String) -> void:
 		entries.append(entry)
 
 	for entry in entries:
-		var out := FileAccess.open(_temp_dir.get_current_dir().path_join(entry.name.to_lower()), FileAccess.WRITE)
+		var out := FileAccess.open(_temp_dir.path_join(entry.name.to_lower()), FileAccess.WRITE)
 		if out == null:
 			continue
 
@@ -55,7 +61,7 @@ static func exists(path: String) -> bool:
 	if path.is_absolute_path():
 		return NoCaseFS.exists(path)
 	else:
-		return _temp_dir.file_exists(path.to_lower())
+		return FileAccess.file_exists(_temp_dir.path_join(path.to_lower()))
 
 
 static func open(path: String, mode: FileAccess.ModeFlags) -> FileAccess:
@@ -66,7 +72,21 @@ static func open(path: String, mode: FileAccess.ModeFlags) -> FileAccess:
 	if path.is_absolute_path():
 		return NoCaseFS.open(path, mode)
 	else:
-		return FileAccess.open(_temp_dir.get_current_dir().path_join(path.to_lower()), mode)
+		return FileAccess.open(_temp_dir.path_join(path.to_lower()), mode)
+
+
+static func _remove_recursive(path: String) -> void:
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(path)
+		return
+	var dir := DirAccess.open(path)
+	if dir == null:
+		return
+	for fname in dir.get_files():
+		DirAccess.remove_absolute(path.path_join(fname))
+	for dname in dir.get_directories():
+		_remove_recursive(path.path_join(dname))
+	DirAccess.remove_absolute(path)
 
 
 class DirEntry:
