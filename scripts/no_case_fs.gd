@@ -31,6 +31,16 @@ static func open(path: String, mode: FileAccess.ModeFlags) -> FileAccess:
 	return FileAccess.open(_map[key], mode)
 
 
+## Resolves a path to its actual on-disk casing, or an empty string if not found.
+static func resolve(path: String) -> String:
+	if !_check_abs_path(path):
+		return ""
+	var key := path.to_lower()
+	if !_map.has(key):
+		return ""
+	return _map[key]
+
+
 static func _walk_dir(path: String) -> Dictionary[String, String]:
 	var dir := DirAccess.open(path)
 	if dir == null:

@@ -18,7 +18,7 @@ static func add_directory(path: String) -> void:
 
 ## Remove the extracted models directory and all of its contents.
 static func clear() -> void:
-	_remove_recursive(_temp_dir)
+	DirAccess.remove_absolute(_temp_dir)
 
 
 ## Add CD image
@@ -75,18 +75,22 @@ static func open(path: String, mode: FileAccess.ModeFlags) -> FileAccess:
 		return FileAccess.open(_temp_dir.path_join(path.to_lower()), mode)
 
 
-static func _remove_recursive(path: String) -> void:
-	if FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)
-		return
-	var dir := DirAccess.open(path)
-	if dir == null:
-		return
-	for fname in dir.get_files():
-		DirAccess.remove_absolute(path.path_join(fname))
-	for dname in dir.get_directories():
-		_remove_recursive(path.path_join(dname))
-	DirAccess.remove_absolute(path)
+## Resolves a model path to an actual filesystem path loadable by ResourceLoader,
+## or an empty string if the model cannot be found.
+static func resolve(path: String) -> String:
+	for spath in _search_paths:
+		var resolved := NoCaseFS.resolve(spath.path_join(path))
+		if not resolved.is_empty():
+			return resolved
+
+	if path.is_absolute_path():
+		return NoCaseFS.resolve(path)
+
+	var full := _temp_dir.path_join(path.to_lower())
+	if FileAccess.file_exists(full):
+		return full
+
+	return ""
 
 
 class DirEntry:
