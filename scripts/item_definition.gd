@@ -101,6 +101,19 @@ class ObjectDef:
 	var flags: int
 	var lights: Array[Light2DFX] = []
 
+	## Whether this is a LOD model. GTA3 names LOD models by replacing the
+	## base model's first three characters with "LOD". (The "IslandLOD*"
+	## silhouette models are a special case handled separately, not by distance.)
+	var is_lod: bool:
+		get:
+			return model_name.begins_with("LOD")
+
+	## Whether this is a "big building". Big buildings only start rendering at
+	## 300 units from the camera, regardless of their draw distance.
+	var is_big_building: bool:
+		get:
+			return draw_distances[0] >= 300.0
+
 
 class Light2DFX:
 	var position: Vector3

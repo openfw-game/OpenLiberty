@@ -21,13 +21,13 @@ func _process(delta: float) -> void:
 	if _thread.is_started() == false:
 		if get_viewport().get_camera_3d() != null:
 			var dist := get_viewport().get_camera_3d().global_position.distance_to(global_position)
-			if dist < visibility_range_end and mesh == null:
+			if dist >= visibility_range_begin and dist < visibility_range_end and mesh == null:
 				_thread.start(_load_mesh)
 				while _thread.is_alive():
 					await get_tree().process_frame
 				_thread.wait_to_finish()
 				mesh = _mesh_buf
-			elif dist > visibility_range_end and mesh != null:
+			elif (dist < visibility_range_begin or dist > visibility_range_end) and mesh != null:
 				mesh = null
 
 func _load_mesh() -> void:
