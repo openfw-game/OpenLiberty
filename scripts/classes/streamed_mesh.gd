@@ -47,6 +47,8 @@ func _load_mesh() -> void:
 			material.cull_mode = BaseMaterial3D.CULL_DISABLED
 			if _object.flags & 0x04:
 				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+			else:
+				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 			if _object.flags & 0x08:
 				material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
 				material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
