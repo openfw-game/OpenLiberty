@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 
 func _load_mesh() -> void:
 	mutex.lock()
-	if _object.flags & 0x40:
+	if _object.flags & 0x40: # Ignore shadows
 		mutex.unlock()
 		return
 	var access := ModelFS.open(_object.model_name + ".dff", FileAccess.READ)
@@ -45,6 +45,8 @@ func _load_mesh() -> void:
 		for surf_id in _mesh_buf.get_surface_count():
 			var material := _mesh_buf.surface_get_material(surf_id) as StandardMaterial3D
 			material.cull_mode = BaseMaterial3D.CULL_DISABLED
+			if _object.flags & 0x04:
+				material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
 			if _object.flags & 0x08:
 				material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
 				material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -57,10 +59,6 @@ func _load_mesh() -> void:
 				for raster in txd.textures:
 					if texture_name.matchn(raster.name):
 						material.albedo_texture = ImageTexture.create_from_image(raster.image)
-						if raster.has_alpha:
-							material.transparency = (
-								BaseMaterial3D.TRANSPARENCY_ALPHA_HASH if _object.flags & 0x04 and not _object.flags & 0x08
-								else BaseMaterial3D.TRANSPARENCY_ALPHA )
 						break
 			_mesh_buf.surface_set_material(surf_id, material)
 	mutex.unlock()
