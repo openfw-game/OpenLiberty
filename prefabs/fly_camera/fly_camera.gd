@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotation.y += deg_to_rad(-event.relative.x * sensitivity)
-		rotation.x += deg_to_rad(-event.relative.y * sensitivity)
+		rotation.x = clampf(rotation.x + deg_to_rad(-event.relative.y * sensitivity), -PI / 2, PI / 2)
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			speed *= 1.25
