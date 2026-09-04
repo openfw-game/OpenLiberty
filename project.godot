@@ -22,7 +22,6 @@ driver/enable_input=true
 [autoload]
 
 GameManager="*res://scripts/game_manager.gd"
-MapBuilder="*res://scripts/map_builder.gd"
 
 [filesystem]
 
