@@ -75,7 +75,7 @@ func instantiate() -> Node3D:
 		var node := StreamedMesh.new(object)
 		node.transform = Utils.gta_to_godot(instance.transform)
 		node.visibility_range_end = object.draw_distances[0]
-		if object.is_big_building:
+		if object.is_big_building and not object.is_lod:
 			node.visibility_range_begin = 300.0
 		root.add_child(node)
 
