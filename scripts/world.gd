@@ -1,26 +1,19 @@
 extends Node
 
-@onready var world := Node3D.new()
+var world: Node3D
+
 @onready var sun = $sun
 @onready var moon = $moon
 @onready var sky = $WorldEnvironment
 var car := preload("res://scenes/car.tscn")
 
 func _ready() -> void:
-	var start := Time.get_ticks_msec()
-	var target = MapBuilder.placements.size()
-	var count := 0
-	var start_t := Time.get_ticks_msec()
-#	add_child(MapBuilder.map)
-	for ipl in MapBuilder.placements:
-		world.add_child(MapBuilder.spawn_placement(ipl))
-		count += 1
-		if Time.get_ticks_msec() - start > (1.0 / 30.0) * 1000:
-			start = Time.get_ticks_msec()
-			print("%f" % (float(count) / float(target)))
-			await get_tree().physics_frame
-	print("Map load completed in %f seconds" % ((Time.get_ticks_msec() - start_t) / 1000))
+	var map := MapData.open(NoCaseFS.resolve(GameManager.gta_path.path_join("data/gta3.dat")))
+	if map == null:
+		return
+	world = map.instantiate()
 	add_child(world)
+
 	sky.environment = load("res://scenes/world/day.tres")
 	moon.visible = not moon.visible
 

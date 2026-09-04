@@ -1,7 +1,7 @@
 class_name StreamedMesh
 extends MeshInstance3D
 
-var _idef: ItemDef
+var _object: ItemDefinition.ObjectDef
 var _thread := Thread.new()
 var _mesh_buf: Mesh
 # I realized this is a very wrong way to load models off the main thread, but
@@ -10,8 +10,8 @@ var _mesh_buf: Mesh
 # TODO: Remove this once RW layer is fully integrated into ResourceLoader.
 static var mutex := Mutex.new()
 
-func _init(idef: ItemDef):
-	_idef = idef
+func _init(object: ItemDefinition.ObjectDef):
+	_object = object
 
 func _exit_tree():
 	if _thread.is_alive():
@@ -32,10 +32,10 @@ func _process(delta: float) -> void:
 
 func _load_mesh() -> void:
 	mutex.lock()
-	if _idef.flags & 0x40:
+	if _object.flags & 0x40:
 		mutex.unlock()
 		return
-	var access := ModelFS.open(_idef.model_name + ".dff", FileAccess.READ)
+	var access := ModelFS.open(_object.model_name + ".dff", FileAccess.READ)
 	if access == null:
 		mutex.unlock()
 		return
@@ -45,11 +45,11 @@ func _load_mesh() -> void:
 		for surf_id in _mesh_buf.get_surface_count():
 			var material := _mesh_buf.surface_get_material(surf_id) as StandardMaterial3D
 			material.cull_mode = BaseMaterial3D.CULL_DISABLED
-			if _idef.flags & 0x08:
+			if _object.flags & 0x08:
 				material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
 				material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 			if material.has_meta("texture_name"):
-				var txd_access := ModelFS.open(_idef.txd_name + ".txd", FileAccess.READ)
+				var txd_access := ModelFS.open(_object.txd_name + ".txd", FileAccess.READ)
 				if txd_access == null:
 					continue
 				var txd := RWTextureDict.new(txd_access)
@@ -59,7 +59,7 @@ func _load_mesh() -> void:
 						material.albedo_texture = ImageTexture.create_from_image(raster.image)
 						if raster.has_alpha:
 							material.transparency = (
-								BaseMaterial3D.TRANSPARENCY_ALPHA_HASH if _idef.flags & 0x04 and not _idef.flags & 0x08
+								BaseMaterial3D.TRANSPARENCY_ALPHA_HASH if _object.flags & 0x04 and not _object.flags & 0x08
 								else BaseMaterial3D.TRANSPARENCY_ALPHA )
 						break
 			_mesh_buf.surface_set_material(surf_id, material)

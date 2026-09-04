@@ -114,7 +114,7 @@ func _init(file: FileAccess):
 				var x := file.get_float()
 				var y := file.get_float()
 				var z := file.get_float()
-				morph_t.vertices.append(Vector3(x, z, -y))
+				morph_t.vertices.append(Vector3(x, y, z))
 		if morph_t.has_normals:
 			for j in vert_count:
 				var normal := Vector3()
