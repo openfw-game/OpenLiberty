@@ -1,9 +1,12 @@
 class_name MapData
 extends RefCounted
 
+const STATIC_LIGHTING_LAYER: int = 1 << 1
+
 var objects: Dictionary[int, ItemDefinition.ObjectDef] = { }
 var instances: Array[ItemPlacement.Instance] = []
 var collisions: Dictionary[String, CollisionFile.CollisionModel] = { }
+var texture_dictionaries: Dictionary[String, RWTextureDict] = { }
 ## Maps LOD model names (lowercase) to their base ObjectDef, built at IDE parse
 ## time by replacing the first three characters of each base name with "LOD".
 ##
@@ -40,8 +43,8 @@ static func open(path: String) -> MapData:
 				data.lod_map.merge(defs.lod_map)
 			"IPL":
 				var placements := ItemPlacement.open(NoCaseFS.resolve(GameManager.gta_path.path_join(
-							tokens[1].replace("\\", "/")
-						)))
+						tokens[1].replace("\\", "/")
+					)))
 				if placements == null:
 					return null
 				data.instances.append_array(placements.instances)
@@ -72,17 +75,24 @@ func instantiate() -> Node3D:
 		if object.model_name.begins_with("IslandLOD"):
 			continue
 
-		var node := StreamedMesh.new(object)
+		if object.flags & 0x40: # Ignore shadows
+			continue
+
+		var node := RWClumpInstance.new()
 		node.transform = Utils.gta_to_godot(instance.transform)
-		node.visibility_range_end = object.draw_distances[0]
-		if object.is_big_building and not object.is_lod:
-			node.visibility_range_begin = 300.0
 		root.add_child(node)
+		if _load_clump(node, object):
+			_apply_object_flags(node, object)
+			for atomic in node.atomics:
+				atomic.visibility_range_end = object.draw_distances[0]
+				if object.is_big_building and not object.is_lod:
+					atomic.visibility_range_begin = 300.0
 
 		if object.is_lod:
 			var base: ItemDefinition.ObjectDef = lod_map.get(object.model_name.to_lower(), null)
 			if base != null:
-				node.visibility_range_begin = base.draw_distances[0]
+				for atomic in node.atomics:
+					atomic.visibility_range_begin = base.draw_distances[0]
 			continue
 
 		var model: CollisionFile.CollisionModel = collisions.get(object.model_name.to_lower(), null)
@@ -95,6 +105,48 @@ func instantiate() -> Node3D:
 	return root
 
 
+func _load_clump(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> bool:
+	var dff_path := ModelFS.resolve(object.model_name + ".dff")
+	if dff_path.is_empty():
+		return false
+	var loaded := ResourceLoader.load(dff_path, "Resource", ResourceLoader.CACHE_MODE_REUSE) as RWClump
+	if loaded == null:
+		return false
+	node.clump = loaded
+	var texture_dictionary := _load_texture_dictionary(object.txd_name)
+	if texture_dictionary != null:
+		node.texture_dictionary = texture_dictionary
+	return true
+
+
+func _load_texture_dictionary(name: String) -> RWTextureDict:
+	var key := name.to_lower()
+	if texture_dictionaries.has(key):
+		return texture_dictionaries[key]
+
+	var txd_path := ModelFS.resolve(name + ".txd")
+	if txd_path.is_empty():
+		return null
+	var loaded := ResourceLoader.load(txd_path, "Resource", ResourceLoader.CACHE_MODE_REUSE) as RWTextureDict
+	if loaded != null:
+		texture_dictionaries[key] = loaded
+	return loaded
+
+
+func _apply_object_flags(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> void:
+	for atomic in node.atomics:
+		if object.flags & 0x20 == 0:
+			atomic.layers = STATIC_LIGHTING_LAYER
+
+		var mesh := atomic.mesh
+		for surf_id in mesh.get_surface_count():
+			var material := mesh.surface_get_material(surf_id) as RWMaterial
+			if material == null:
+				continue
+			if object.flags & 0x08:
+				material.blend_mode = RWMaterial.BlendMode.ADD
+
+
 func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
 	var node := OmniLight3D.new()
 	node.position = light.position
@@ -104,6 +156,7 @@ func _spawn_light(parent: Node3D, light: ItemDefinition.Light2DFX) -> void:
 	node.omni_range = light.outer_range
 	node.shadow_opacity = float(light.shadow_intensity) / 40.0
 	node.shadow_enabled = true
+	node.light_cull_mask &= ~STATIC_LIGHTING_LAYER
 	parent.add_child(node)
 
 
