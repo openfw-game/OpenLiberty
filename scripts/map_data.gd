@@ -6,6 +6,7 @@ const STATIC_LIGHTING_LAYER: int = 1 << 1
 var objects: Dictionary[int, ItemDefinition.ObjectDef] = { }
 var instances: Array[ItemPlacement.Instance] = []
 var collisions: Dictionary[String, CollisionFile.CollisionModel] = { }
+var texture_dictionaries: Dictionary[String, RWTextureDict] = { }
 ## Maps LOD model names (lowercase) to their base ObjectDef, built at IDE parse
 ## time by replacing the first three characters of each base name with "LOD".
 ##
@@ -42,8 +43,8 @@ static func open(path: String) -> MapData:
 				data.lod_map.merge(defs.lod_map)
 			"IPL":
 				var placements := ItemPlacement.open(NoCaseFS.resolve(GameManager.gta_path.path_join(
-							tokens[1].replace("\\", "/")
-						)))
+						tokens[1].replace("\\", "/")
+					)))
 				if placements == null:
 					return null
 				data.instances.append_array(placements.instances)
@@ -112,7 +113,24 @@ func _load_clump(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> boo
 	if loaded == null:
 		return false
 	node.clump = loaded
+	var texture_dictionary := _load_texture_dictionary(object.txd_name)
+	if texture_dictionary != null:
+		node.texture_dictionary = texture_dictionary
 	return true
+
+
+func _load_texture_dictionary(name: String) -> RWTextureDict:
+	var key := name.to_lower()
+	if texture_dictionaries.has(key):
+		return texture_dictionaries[key]
+
+	var txd_path := ModelFS.resolve(name + ".txd")
+	if txd_path.is_empty():
+		return null
+	var loaded := ResourceLoader.load(txd_path, "Resource", ResourceLoader.CACHE_MODE_REUSE) as RWTextureDict
+	if loaded != null:
+		texture_dictionaries[key] = loaded
+	return loaded
 
 
 func _apply_object_flags(node: RWClumpInstance, object: ItemDefinition.ObjectDef) -> void:
