@@ -106,6 +106,35 @@ You can watch the demo video on [this](https://youtu.be/Z3Cd_NBYUfI?feature=shar
 - [ ] Support modding
 - [ ] Multiplayer (WIP, almost working)
 
+## Overhaul TODOs
+
+### RenderWare addon
+
+- [ ] Harden the generic RenderWare chunk walker and loader error handling.
+- [ ] Document the public resource and instance APIs so the addon can be used by other projects.
+
+### Project asset resources
+
+- [ ] Convert the GTA collision parser into a `CollisionFile : Resource`.
+- [ ] Add a project-level `.col` `ResourceFormatLoader` with validated parsing and case-insensitive model lookup.
+- [ ] Add a `CollisionInstance : StaticBody3D` that builds box, sphere, and triangle collision shapes from a collision model.
+- [ ] Replace `MapData` collision construction with `CollisionInstance` nodes.
+- [ ] Add focused test scenes for COL loading and collision geometry.
+
+### Map and asset assembly
+
+- [ ] Extract a project-level asset resolver/registry for item definitions, DFFs, TXDs, and COLs after their resource boundaries are stable.
+- [ ] Move model, texture, collision, and placement construction out of `MapData` into focused components.
+- [ ] Add explicit diagnostics for missing files, duplicate definitions, malformed records, and unknown object IDs.
+- [ ] Parse `ZONE` sections from `.zon` and `.ipl` files.
+- [ ] Add a zone system that tracks the active gameplay and island zones.
+- [ ] Use type 3 island zones and their level values to control island asset visibility/loading.
+- [ ] Integrate zone state with `IslandLOD*` model handling.
+
+### World runtime
+
+- [ ] Keep render, collision, and effects activation independent when building placement instances.
+
 ## Documentation
 
 The most advanced and complete website for GTA documentation is the GTAMods Wiki, you can read it on [this](https://gtamods.com/wiki/Main_Page) link.
