@@ -5,7 +5,6 @@ var world: Node3D
 @onready var sun = $sun
 @onready var moon = $moon
 @onready var sky = $WorldEnvironment
-var car := preload("res://scenes/car.tscn")
 
 func _ready() -> void:
 	var map := MapData.open(NoCaseFS.resolve(GameManager.gta_path.path_join("data/gta3.dat")))
@@ -18,10 +17,7 @@ func _ready() -> void:
 	moon.visible = not moon.visible
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_pressed("spawn"):
-			var car_node := car.instantiate()
-			add_child(car_node)
-			car_node.global_position = get_viewport().get_camera_3d().global_position
+	pass
 
 func _input(event):
 	if Input.is_action_just_pressed("full_screen"):
