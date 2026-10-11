@@ -25,7 +25,7 @@ GameManager="*res://scripts/core/singleton/game_manager.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/atirutw.renderware/plugin.cfg")
+enabled=PackedStringArray("res://addons/atirutw.renderware/plugin.cfg", "res://addons/imgui-godot/plugin.cfg")
 
 [filesystem]
 
