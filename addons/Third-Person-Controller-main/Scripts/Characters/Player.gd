@@ -17,6 +17,12 @@ const ANIMATION_BLEND : float = 7.0
 @onready var player_mesh : Node3D = $Mesh
 @onready var spring_arm_pivot : Node3D = $SpringArmPivot
 @onready var animator : AnimationTree = $AnimationTree
+@onready var ol_camera: OLCamera = $SpringArmPivot/SpringArm3D/OLCamera
+
+func _ready():
+	GameManager._player_camera = ol_camera
+	
+	DebugManager.debug_mode_changed.connect(_on_debug_mode_changed)
 
 func _physics_process(delta):
 	var move_direction : Vector3 = Vector3.ZERO
@@ -62,3 +68,14 @@ func animate(delta):
 			animator.set("parameters/iwr_blend/blend_amount", lerp(animator.get("parameters/iwr_blend/blend_amount"), -1.0, delta * ANIMATION_BLEND))
 	else:
 		animator.set("parameters/ground_air_transition/transition_request", "air")
+
+func _on_debug_mode_changed(_mode:DebugManager.DebugMode) -> void:
+	match _mode:
+		DebugManager.DebugMode.ENABLED:
+			set_process_input(false)
+			set_process(false)
+			set_physics_process(false)
+		DebugManager.DebugMode.DISABLED:
+			set_process_input(true)
+			set_process(true)
+			set_physics_process(true)
